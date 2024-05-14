@@ -1,0 +1,64 @@
+name: pipeline-with-mocks
+description: a full pipeline seeded with data from mock-observations feature
+tags:
+initialize:
+  plugins:
+    mock-observations:
+      kind: plugin
+      method: MockObservations
+      path: "@grnsft/if-plugins"
+      global-config:
+        timestamp-from: 2024-05-13T00:00
+        timestamp-to: 2024-05-13T01:00
+        duration: 60
+        components:
+          - cloud/instance-type: A1
+        generators:
+          common:
+            cloud/region: switzerland-north
+            # cloud/region: switzerland-north
+            common-key: common-val
+          randint:
+            cpu/energy: # in watts
+              min: 100
+              max: 130
+            cpu/utilization:
+              min: 1
+              max: 99
+    operational-carbon:
+      path: '@grnsft/if-plugins'
+      method: Multiply
+      global-config:
+        input-parameters: ['grid/carbon-intensity', 'cpu/energy']
+        output-parameter: 'carbon'
+    rename-parameter-plugin:
+      path: 'rename-parameter-plugin'
+      method: RenameParameterPlugin
+      global-config:
+        keep-existing: true
+  outputs: ['yaml']
+tree:
+  children:
+    child-1: # choose any name
+      pipeline:
+        - mock-observations
+        - operational-carbon
+        - rename-parameter-plugin
+      config:
+        group-by:
+          group:
+            - cloud/region
+            - instance-type
+        rename-parameter-plugin:
+          from-parameter: cpu/energy
+          to-parameter: energy
+      defaults:
+        cpu/thermal-design-power: 100
+        grid/carbon-intensity: 800
+        device/emissions-embodied: 1533.120 # gCO2eq
+        time-reserved: 3600 # 1hr in seconds
+        device/expected-lifespan: 94608000 # 3 years in seconds
+        resources-reserved: 1
+        resources-total: 8
+        functional-unit-time: "1 min"
+      inputs: null # because provided by the mock-observations plugin
