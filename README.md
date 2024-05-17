@@ -19,3 +19,5 @@ This repository contains an example created by following [this training on youtu
 * ```npm link rename-parameter-plugin```
 * The plugin can now be used in the manifest yaml
 * ```ie --manifest ./manifests/pipeline-with-mocks.yml --output ./output/mocks-output```
+
+.
