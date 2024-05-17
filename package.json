@@ -1,0 +1,21 @@
+{
+  "name": "impact-framework-challenge",
+  "version": "1.0.0",
+  "description": "Repository for the Impact Framework Challenge",
+  "main": "index.js",
+  "dependencies": {
+    "@grnsft/if": "^0.3.2",
+    "@grnsft/if-plugins": "^0.3.2",
+    "@grnsft/if-unofficial-plugins": "^0.3.1",
+    "add-constants-plugin": "file:add-constants-plugin",
+    "rename-parameter-plugin": "file:rename-parameter-plugin",
+    "string-to-number-plugin": "file:string-to-number-plugin",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "start": "ie --manifest playground/manifests/main.yml",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
