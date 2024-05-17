@@ -14,6 +14,26 @@ initialize:
     string-to-number-plugin:
       path: "string-to-number-plugin"
       method: StringToNumberPlugin
+    coefficient:
+      method: Coefficient
+      path: "@grnsft/if-plugins"
+      global-config:
+        input-parameter: "memory/available/GB"
+        coefficient: -1
+        output-parameter: "memory/available/GB/negative"
+    sum:
+      method: Sum
+      path: "@grnsft/if-plugins"
+      global-config:
+        input-parameters: ["memory/available/GB/negative", "memory-available"]
+        output-parameter: "memory/utilization/GB"
+    divide:
+      method: Divide
+      path: "@grnsft/if-plugins"
+      global-config:
+        numerator: "memory/utilization/GB"
+        denominator: "memory-available"
+        output: "memory/utilization"
 tree:
   children:
     child:
@@ -22,6 +42,9 @@ tree:
         - cloud-metadata
         - string-to-number-plugin
         - teads-curve
+        - coefficient
+        - sum
+        - divide
       config:
         azure-importer:
           azure-observation-window: 5 min
