@@ -44,6 +44,9 @@ initialize:
       path: "@grnsft/if-plugins"
       # global-config:
       #   energy-per-gb: 0.002
+    sci-e:
+      method: SciE
+      path: "@grnsft/if-plugins"
 tree:
   children:
     child:
@@ -57,6 +60,7 @@ tree:
         - divide
         - rename-parameter-plugin
         - e-mem
+        - sci-e
       config:
         azure-importer:
           azure-observation-window: 5 min
