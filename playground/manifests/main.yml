@@ -1,0 +1,78 @@
+name: azure-test
+description: Data to get data from the Odoo Test VM
+initialize:
+  plugins:
+    azure-importer:
+      method: AzureImporter
+      path: "@grnsft/if-unofficial-plugins"
+    cloud-metadata:
+      method: CloudMetadata
+      path: "@grnsft/if-plugins"
+    teads-curve:
+      method: TeadsCurve
+      path: "@grnsft/if-unofficial-plugins"
+    string-to-number-plugin:
+      path: "string-to-number-plugin"
+      method: StringToNumberPlugin
+    coefficient:
+      method: Coefficient
+      path: "@grnsft/if-plugins"
+      global-config:
+        input-parameter: "memory/available/GB"
+        coefficient: -1
+        output-parameter: "memory/available/GB/negative"
+    sum:
+      method: Sum
+      path: "@grnsft/if-plugins"
+      global-config:
+        input-parameters: ["memory/available/GB/negative", "memory-available"]
+        output-parameter: "memory/utilization/GB"
+    divide:
+      method: Divide
+      path: "@grnsft/if-plugins"
+      global-config:
+        numerator: "memory/utilization/GB"
+        denominator: "memory-available"
+        output: "memory/utilization"
+    rename-parameter-plugin:
+      path: "rename-parameter-plugin"
+      method: RenameParameterPlugin
+      global-config:
+        keep-existing: true
+    e-mem:
+      method: EMem
+      path: "@grnsft/if-plugins"
+      # global-config:
+      #   energy-per-gb: 0.002
+    sci-e:
+      method: SciE
+      path: "@grnsft/if-plugins"
+tree:
+  children:
+    child:
+      pipeline:
+        - azure-importer
+        - cloud-metadata
+        - string-to-number-plugin
+        - teads-curve
+        - coefficient
+        - sum
+        - divide
+        - rename-parameter-plugin
+        - e-mem
+        - sci-e
+      config:
+        azure-importer:
+          azure-observation-window: 5 min
+          azure-observation-aggregation: "average"
+          azure-subscription-id: eb31efe5-ba49-481f-b1e6-add66b5fbe80
+          azure-resource-group: cws-test-chn1-odoo-rg-01
+          azure-vm-name: chn1t-odoo-vm
+        string-to-number-plugin:
+          from-parameter: cpu/utilization
+        rename-parameter-plugin:
+          from-parameter: memory-available
+          to-parameter: memory/capacity
+      inputs:
+        - timestamp: "2024-05-07T17:00:00.000Z"
+          duration: 3600 # 1468800
