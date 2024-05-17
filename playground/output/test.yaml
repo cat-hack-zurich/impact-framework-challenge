@@ -1,0 +1,1087 @@
+name: pipeline-with-mocks
+description: a full pipeline seeded with data from mock-observations feature
+tags: null
+initialize:
+  plugins:
+    mock-observations:
+      path: '@grnsft/if-plugins'
+      method: MockObservations
+      global-config:
+        timestamp-from: 2024-05-13T00:00
+        timestamp-to: 2024-05-13T01:00
+        duration: 60
+        components:
+          - cloud/instance-type: A1
+        generators:
+          common:
+            cloud/region: switzerland-north
+            common-key: common-val
+          randint:
+            cpu/energy:
+              min: 100
+              max: 130
+            cpu/utilization:
+              min: 1
+              max: 99
+    operational-carbon:
+      path: '@grnsft/if-plugins'
+      method: Multiply
+      global-config:
+        input-parameters:
+          - grid/carbon-intensity
+          - cpu/energy
+        output-parameter: carbon
+    rename-parameter-plugin:
+      path: rename-parameter-plugin
+      method: RenameParameterPlugin
+      global-config:
+        keep-existing: true
+  outputs:
+    - yaml
+if-version: v0.3.2
+tree:
+  children:
+    child-1:
+      pipeline:
+        - mock-observations
+        - operational-carbon
+        - rename-parameter-plugin
+      config:
+        group-by:
+          group:
+            - cloud/region
+            - instance-type
+        rename-parameter-plugin:
+          from-parameter: cpu/energy
+          to-parameter: energy
+      defaults:
+        cpu/thermal-design-power: 100
+        grid/carbon-intensity: 800
+        device/emissions-embodied: 1533.12
+        time-reserved: 3600
+        device/expected-lifespan: 94608000
+        resources-reserved: 1
+        resources-total: 8
+        functional-unit-time: 1 min
+      inputs: null
+      outputs:
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:00:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 126
+          cpu/utilization: 23
+          carbon: 100800
+          energy: 126
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:01:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 125
+          cpu/utilization: 25
+          carbon: 100000
+          energy: 125
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:02:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 106
+          cpu/utilization: 5
+          carbon: 84800
+          energy: 106
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:03:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 124
+          cpu/utilization: 34
+          carbon: 99200
+          energy: 124
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:04:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 102
+          cpu/utilization: 47
+          carbon: 81600
+          energy: 102
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:05:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 127
+          cpu/utilization: 94
+          carbon: 101600
+          energy: 127
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:06:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 126
+          cpu/utilization: 12
+          carbon: 100800
+          energy: 126
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:07:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 128
+          cpu/utilization: 33
+          carbon: 102400
+          energy: 128
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:08:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 128
+          cpu/utilization: 5
+          carbon: 102400
+          energy: 128
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:09:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 111
+          cpu/utilization: 54
+          carbon: 88800
+          energy: 111
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:10:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 118
+          cpu/utilization: 75
+          carbon: 94400
+          energy: 118
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:11:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 103
+          cpu/utilization: 46
+          carbon: 82400
+          energy: 103
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:12:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 110
+          cpu/utilization: 25
+          carbon: 88000
+          energy: 110
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:13:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 111
+          cpu/utilization: 14
+          carbon: 88800
+          energy: 111
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:14:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 107
+          cpu/utilization: 50
+          carbon: 85600
+          energy: 107
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:15:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 117
+          cpu/utilization: 41
+          carbon: 93600
+          energy: 117
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:16:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 119
+          cpu/utilization: 66
+          carbon: 95200
+          energy: 119
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:17:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 124
+          cpu/utilization: 3
+          carbon: 99200
+          energy: 124
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:18:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 117
+          cpu/utilization: 31
+          carbon: 93600
+          energy: 117
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:19:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 119
+          cpu/utilization: 82
+          carbon: 95200
+          energy: 119
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:20:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 102
+          cpu/utilization: 98
+          carbon: 81600
+          energy: 102
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:21:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 114
+          cpu/utilization: 41
+          carbon: 91200
+          energy: 114
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:22:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 124
+          cpu/utilization: 4
+          carbon: 99200
+          energy: 124
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:23:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 106
+          cpu/utilization: 93
+          carbon: 84800
+          energy: 106
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:24:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 104
+          cpu/utilization: 70
+          carbon: 83200
+          energy: 104
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:25:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 124
+          cpu/utilization: 57
+          carbon: 99200
+          energy: 124
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:26:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 112
+          cpu/utilization: 44
+          carbon: 89600
+          energy: 112
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:27:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 113
+          cpu/utilization: 28
+          carbon: 90400
+          energy: 113
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:28:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 109
+          cpu/utilization: 24
+          carbon: 87200
+          energy: 109
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:29:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 112
+          cpu/utilization: 98
+          carbon: 89600
+          energy: 112
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:30:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 126
+          cpu/utilization: 90
+          carbon: 100800
+          energy: 126
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:31:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 106
+          cpu/utilization: 60
+          carbon: 84800
+          energy: 106
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:32:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 121
+          cpu/utilization: 53
+          carbon: 96800
+          energy: 121
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:33:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 120
+          cpu/utilization: 56
+          carbon: 96000
+          energy: 120
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:34:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 127
+          cpu/utilization: 33
+          carbon: 101600
+          energy: 127
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:35:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 115
+          cpu/utilization: 60
+          carbon: 92000
+          energy: 115
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:36:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 121
+          cpu/utilization: 65
+          carbon: 96800
+          energy: 121
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:37:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 110
+          cpu/utilization: 27
+          carbon: 88000
+          energy: 110
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:38:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 111
+          cpu/utilization: 21
+          carbon: 88800
+          energy: 111
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:39:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 116
+          cpu/utilization: 3
+          carbon: 92800
+          energy: 116
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:40:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 111
+          cpu/utilization: 74
+          carbon: 88800
+          energy: 111
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:41:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 119
+          cpu/utilization: 13
+          carbon: 95200
+          energy: 119
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:42:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 128
+          cpu/utilization: 18
+          carbon: 102400
+          energy: 128
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:43:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 119
+          cpu/utilization: 85
+          carbon: 95200
+          energy: 119
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:44:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 128
+          cpu/utilization: 20
+          carbon: 102400
+          energy: 128
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:45:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 124
+          cpu/utilization: 84
+          carbon: 99200
+          energy: 124
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:46:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 104
+          cpu/utilization: 78
+          carbon: 83200
+          energy: 104
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:47:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 118
+          cpu/utilization: 92
+          carbon: 94400
+          energy: 118
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:48:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 102
+          cpu/utilization: 53
+          carbon: 81600
+          energy: 102
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:49:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 101
+          cpu/utilization: 64
+          carbon: 80800
+          energy: 101
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:50:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 118
+          cpu/utilization: 98
+          carbon: 94400
+          energy: 118
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:51:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 104
+          cpu/utilization: 63
+          carbon: 83200
+          energy: 104
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:52:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 128
+          cpu/utilization: 62
+          carbon: 102400
+          energy: 128
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:53:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 114
+          cpu/utilization: 5
+          carbon: 91200
+          energy: 114
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:54:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 126
+          cpu/utilization: 8
+          carbon: 100800
+          energy: 126
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:55:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 127
+          cpu/utilization: 36
+          carbon: 101600
+          energy: 127
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:56:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 118
+          cpu/utilization: 59
+          carbon: 94400
+          energy: 118
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:57:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 107
+          cpu/utilization: 43
+          carbon: 85600
+          energy: 107
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:58:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 105
+          cpu/utilization: 72
+          carbon: 84000
+          energy: 105
+        - cpu/thermal-design-power: 100
+          grid/carbon-intensity: 800
+          device/emissions-embodied: 1533.12
+          time-reserved: 3600
+          device/expected-lifespan: 94608000
+          resources-reserved: 1
+          resources-total: 8
+          functional-unit-time: 1 min
+          timestamp: '2024-05-13T00:59:00.000Z'
+          duration: 60
+          cloud/instance-type: A1
+          cloud/region: switzerland-north
+          common-key: common-val
+          cpu/energy: 114
+          cpu/utilization: 23
+          carbon: 91200
+          energy: 114

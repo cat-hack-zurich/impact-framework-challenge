@@ -36,6 +36,11 @@ initialize:
       method: RenameParameterPlugin
       global-config:
         keep-existing: true
+    swiss-grid-plugin:
+      path: 'swiss-grid-plugin'
+      method: SwissGridPlugin
+      global-config:
+        keep-existing: true
   outputs: ['yaml']
 tree:
   children:
@@ -44,6 +49,7 @@ tree:
         - mock-observations
         - operational-carbon
         - rename-parameter-plugin
+        - swiss-grid-plugin
       config:
         group-by:
           group:

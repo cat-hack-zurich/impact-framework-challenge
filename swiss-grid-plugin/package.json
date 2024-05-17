@@ -1,0 +1,14 @@
+{
+  "name": "swiss-grid-plugin",
+  "version": "1.0.0",
+  "description": "Reads the swiss grid csv data and exports the carbon intensity over time",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^5.5.6"
+  }
+}
