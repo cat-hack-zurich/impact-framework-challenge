@@ -29,7 +29,7 @@ const SwissGridPlugin = () => {
 
       return {
         ...input,
-        ['grid/carbon-intensity2']: outputValue,
+        ['grid/carbon-intensity']: Number(outputValue),
       };
     });
   };

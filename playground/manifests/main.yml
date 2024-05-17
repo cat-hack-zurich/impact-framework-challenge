@@ -47,6 +47,12 @@ initialize:
     sci-e:
       method: SciE
       path: "@grnsft/if-plugins"
+    swiss-grid-plugin:
+      path: "swiss-grid-plugin"
+      method: SwissGridPlugin
+    sci-o:
+      method: SciO
+      path: "@grnsft/if-plugins"
 tree:
   children:
     child:
@@ -61,6 +67,8 @@ tree:
         - rename-parameter-plugin
         - e-mem
         - sci-e
+        - swiss-grid-plugin
+        - sci-o
       config:
         azure-importer:
           azure-observation-window: 5 min

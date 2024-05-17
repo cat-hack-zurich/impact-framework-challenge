@@ -4,13 +4,14 @@
   "description": "Reads the swiss grid csv data and exports the carbon intensity over time",
   "main": "index.js",
   "scripts": {
-    "start": "ie --manifest playground/manifests/pipeline-with-mocks.yml --output playground/output/test-swiss",
+    "start": "ie --manifest playground/manifests/main.yml --output playground/output/main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "rename-parameter-plugin": "file:rename-parameter-plugin",
+    "string-to-number-plugin": "file:string-to-number-plugin",
     "swiss-grid-plugin": "file:swiss-grid-plugin"
   }
 }
