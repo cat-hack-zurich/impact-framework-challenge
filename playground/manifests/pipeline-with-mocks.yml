@@ -6,10 +6,10 @@ initialize:
     mock-observations:
       kind: plugin
       method: MockObservations
-      path: "@grnsft/if-plugins"
+      path: '@grnsft/if-plugins'
       global-config:
-        timestamp-from: 2024-05-13T00:00
-        timestamp-to: 2024-05-13T01:00
+        timestamp-from: 2024-05-12T00:00
+        timestamp-to: 2024-05-15T00:00
         duration: 60
         components:
           - cloud/instance-type: A1
@@ -20,8 +20,8 @@ initialize:
             common-key: common-val
           randint:
             cpu/energy: # in watts
-              min: 100
-              max: 130
+              min: 1
+              max: 250
             cpu/utilization:
               min: 1
               max: 99
@@ -31,11 +31,11 @@ initialize:
       global-config:
         input-parameters: ['grid/carbon-intensity', 'cpu/energy']
         output-parameter: 'carbon'
-    rename-parameter-plugin:
-      path: 'rename-parameter-plugin'
-      method: RenameParameterPlugin
+    json-exporter:
+      method: JSONExporter
+      path: '@greenguardians/json-exporter'
       global-config:
-        keep-existing: true
+        output-path: /var/www/html/data/exported.json
     swiss-grid-plugin:
       path: 'swiss-grid-plugin'
       method: SwissGridPlugin
@@ -48,16 +48,13 @@ tree:
       pipeline:
         - mock-observations
         - operational-carbon
-        - rename-parameter-plugin
         - swiss-grid-plugin
+        - json-exporter
       config:
         group-by:
           group:
             - cloud/region
             - instance-type
-        rename-parameter-plugin:
-          from-parameter: cpu/energy
-          to-parameter: energy
       defaults:
         cpu/thermal-design-power: 100
         grid/carbon-intensity: 800
