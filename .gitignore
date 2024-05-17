@@ -131,3 +131,5 @@ dist
 
 # Impact Framework outputs
 *output.yaml
+
+.DS_Store
