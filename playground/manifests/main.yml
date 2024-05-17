@@ -58,6 +58,17 @@ initialize:
       path: "@grnsft/if-plugins"
       global-config:
         functional-unit-time: "5 minutes"
+    add-constants-plugin:
+      path: add-constants-plugin
+      method: AddConstantsPlugin
+    'boavizta-cloud':
+      method: BoaviztaCloudOutput
+      path: '@grnsft/if-unofficial-plugins'
+    json-exporter:
+      method: JSONExporter
+      path: "@greenguardians/json-exporter"
+      global-config:
+        output-path: ./data/exported.json
 tree:
   children:
     child:
@@ -74,7 +85,11 @@ tree:
         - sci-e
         - swiss-grid-plugin
         - sci-o
+        - add-constants-plugin
+        - boavizta-cloud
         - sci
+        - json-exporter
+
       config:
         azure-importer:
           azure-observation-window: 5 min
@@ -87,6 +102,11 @@ tree:
         rename-parameter-plugin:
           from-parameter: memory-available
           to-parameter: memory/capacity
+        add-constants-plugin: 
+          - key: provider
+            value: aws
+          - key: instance-type
+            value: t4g.xlarge
       inputs:
         - timestamp: "2024-05-07T17:00:00.000Z"
-          duration: 3600 # 1468800
+          duration: 604800 # 1468800
