@@ -34,6 +34,16 @@ initialize:
         numerator: "memory/utilization/GB"
         denominator: "memory-available"
         output: "memory/utilization"
+    rename-parameter-plugin:
+      path: "rename-parameter-plugin"
+      method: RenameParameterPlugin
+      global-config:
+        keep-existing: true
+    e-mem:
+      method: EMem
+      path: "@grnsft/if-plugins"
+      # global-config:
+      #   energy-per-gb: 0.002
 tree:
   children:
     child:
@@ -45,6 +55,8 @@ tree:
         - coefficient
         - sum
         - divide
+        - rename-parameter-plugin
+        - e-mem
       config:
         azure-importer:
           azure-observation-window: 5 min
@@ -54,6 +66,9 @@ tree:
           azure-vm-name: chn1t-odoo-vm
         string-to-number-plugin:
           from-parameter: cpu/utilization
+        rename-parameter-plugin:
+          from-parameter: memory-available
+          to-parameter: memory/capacity
       inputs:
         - timestamp: "2024-05-07T17:00:00.000Z"
           duration: 3600 # 1468800
