@@ -53,6 +53,11 @@ initialize:
     sci-o:
       method: SciO
       path: "@grnsft/if-plugins"
+    sci:
+      method: Sci
+      path: "@grnsft/if-plugins"
+      global-config:
+        functional-unit-time: "5 minutes"
 tree:
   children:
     child:
@@ -69,6 +74,7 @@ tree:
         - sci-e
         - swiss-grid-plugin
         - sci-o
+        - sci
       config:
         azure-importer:
           azure-observation-window: 5 min
